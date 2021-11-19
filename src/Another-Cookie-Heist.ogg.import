@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Another-Cookie-Heist.ogg-0065d5901f173d47b0b22f22a158ea08.oggstr"
+
+[deps]
+
+source_file="res://Another-Cookie-Heist.ogg"
+dest_files=[ "res://.import/Another-Cookie-Heist.ogg-0065d5901f173d47b0b22f22a158ea08.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

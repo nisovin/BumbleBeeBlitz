@@ -1,0 +1,347 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://player/Player.gd" type="Script" id=1]
+[ext_resource path="res://player/PlayerController.gd" type="Script" id=2]
+[ext_resource path="res://licensed/Salmon Sans 9 Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://player/CPUController.gd" type="Script" id=4]
+[ext_resource path="res://player/bee1.png" type="Texture" id=5]
+[ext_resource path="res://player/bee2.png" type="Texture" id=6]
+[ext_resource path="res://player/bucket_empty.png" type="Texture" id=7]
+[ext_resource path="res://player/bucket_nectar.png" type="Texture" id=8]
+[ext_resource path="res://player/indicator1.png" type="Texture" id=9]
+[ext_resource path="res://player/indicator2.png" type="Texture" id=10]
+[ext_resource path="res://player/indicator_bucket.png" type="Texture" id=11]
+[ext_resource path="res://player/shadow.png" type="Texture" id=12]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 2.0
+
+[sub_resource type="Animation" id=7]
+resource_name = "swing"
+length = 1.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bucket:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 10.0, -10.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "swing2"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bucket:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -10.0, 10.0 ]
+}
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 5 )
+region = Rect2( 55, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 5 )
+region = Rect2( 110, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 5 )
+region = Rect2( 165, 0, 55, 45 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ) ],
+"loop": true,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 6 )
+region = Rect2( 55, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 6 )
+region = Rect2( 110, 0, 55, 45 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 6 )
+region = Rect2( 165, 0, 55, 45 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"loop": true,
+"name": "default",
+"speed": 24.0
+} ]
+
+[sub_resource type="Animation" id=5]
+resource_name = "chargeup"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bee/Holder:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.15, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -3.0, 3.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "reset"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bee/Holder:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bee/Holder:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "stunned"
+length = 0.4
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bee/Holder:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, 20.0, 0.0 ]
+}
+
+[sub_resource type="DynamicFont" id=14]
+size = 9
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=24]
+emission_shape = 1
+emission_sphere_radius = 6.0
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 20.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 4.0
+angle = 20.0
+angle_random = 1.0
+scale = 2.5
+scale_random = 1.0
+
+[sub_resource type="Animation" id=6]
+resource_name = "nectar"
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Visuals:position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 2, -2, 0.5 ),
+"update": 0,
+"values": [ -6.0, 6.0, -6.0 ]
+}
+
+[node name="Player" type="KinematicBody2D" groups=["players"]]
+collision_layer = 524288
+collision_mask = 65
+script = ExtResource( 1 )
+
+[node name="PlayerController" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="CPUController" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="AITimer" type="Timer" parent="CPUController"]
+wait_time = 0.1
+one_shot = true
+
+[node name="ShootTimer" type="Timer" parent="CPUController"]
+wait_time = 0.5
+one_shot = true
+
+[node name="ShootRay" type="RayCast2D" parent="CPUController"]
+position = Vector2( 0, 2 )
+collision_mask = 71
+collide_with_areas = true
+
+[node name="ObstacleRay" type="RayCast2D" parent="CPUController"]
+position = Vector2( 0, 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 1 )
+
+[node name="FlowerDetector" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FlowerDetector"]
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AimArrow" type="Node2D" parent="."]
+visible = false
+
+[node name="Line" type="Polygon2D" parent="AimArrow"]
+position = Vector2( -0.566918, 0 )
+polygon = PoolVector2Array( 0, -2, 0, 2, 10, 2, 10, -2 )
+
+[node name="Point" type="Polygon2D" parent="AimArrow"]
+position = Vector2( 9.43308, 0 )
+polygon = PoolVector2Array( -1, -5, 5, 0, -1, 5 )
+
+[node name="Visuals" type="Node2D" parent="."]
+position = Vector2( 0, -6 )
+
+[node name="Bucket" type="Node2D" parent="Visuals"]
+
+[node name="Empty" type="Sprite" parent="Visuals/Bucket"]
+position = Vector2( 0.75, 36.5 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 7 )
+
+[node name="Nectar" type="Sprite" parent="Visuals/Bucket"]
+modulate = Color( 1, 0.937255, 0, 1 )
+position = Vector2( 0.75, 36.5 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 8 )
+
+[node name="SwingAnim" type="AnimationPlayer" parent="Visuals/Bucket"]
+root_node = NodePath("../..")
+autoplay = "swing"
+anims/swing = SubResource( 7 )
+anims/swing2 = SubResource( 8 )
+
+[node name="Bee" type="Node2D" parent="Visuals"]
+
+[node name="Holder" type="Node2D" parent="Visuals/Bee"]
+
+[node name="Sprite1" type="AnimatedSprite" parent="Visuals/Bee/Holder"]
+position = Vector2( -7, -4 )
+frames = SubResource( 13 )
+playing = true
+
+[node name="Sprite2" type="AnimatedSprite" parent="Visuals/Bee/Holder"]
+position = Vector2( -7, -4 )
+frames = SubResource( 19 )
+frame = 3
+playing = true
+
+[node name="StunAnim" type="AnimationPlayer" parent="Visuals/Bee"]
+root_node = NodePath("../..")
+anims/chargeup = SubResource( 5 )
+anims/reset = SubResource( 4 )
+anims/stunned = SubResource( 3 )
+
+[node name="Shadow" type="Sprite" parent="Visuals"]
+position = Vector2( 5, 78 )
+z_index = -1
+texture = ExtResource( 12 )
+
+[node name="Nameplate" type="Label" parent="Visuals"]
+margin_left = -50.0
+margin_top = -33.0
+margin_right = 50.0
+margin_bottom = -16.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 14 )
+text = "Bumble"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GatheringParticles" type="Particles2D" parent="."]
+position = Vector2( 0, 24 )
+amount = 15
+local_coords = false
+process_material = SubResource( 24 )
+
+[node name="BounceAnim" type="AnimationPlayer" parent="."]
+anims/nectar = SubResource( 6 )
+
+[node name="Indicator" type="Node2D" parent="."]
+visible = false
+
+[node name="Indicator1" type="Sprite" parent="Indicator"]
+texture = ExtResource( 9 )
+
+[node name="Indicator2" type="Sprite" parent="Indicator"]
+texture = ExtResource( 10 )
+
+[node name="IndicatorBucket" type="Sprite" parent="Indicator"]
+visible = false
+position = Vector2( 0, 4 )
+texture = ExtResource( 11 )
+
+[connection signal="timeout" from="CPUController/AITimer" to="CPUController" method="ai_tick"]
+[connection signal="timeout" from="CPUController/ShootTimer" to="CPUController" method="shoot_fire"]

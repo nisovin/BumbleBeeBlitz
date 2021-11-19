@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/UI_Quirky8.wav-c631f004947bc43d36d6de7be8dd8787.sample"
+
+[deps]
+
+source_file="res://sounds/UI_Quirky8.wav"
+dest_files=[ "res://.import/UI_Quirky8.wav-c631f004947bc43d36d6de7be8dd8787.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
