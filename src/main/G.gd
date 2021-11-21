@@ -155,5 +155,8 @@ const MESSAGES = {
 	"superbloom": [
 		"A [color=purple]SUPER FLOWER[/color] has bloomed! The team to collect it will gain 25 points!",
 		"Another 25 points are available to the first team to collect the [color=purple]SUPER FLOWER[/color] that just bloomed!"
+	],
+	"ladybugswarm": [
+		"A [color=#E75480]LADY BUG SWARM[/color] is passing through! Catch ladybugs to earn points."
 	]
 }

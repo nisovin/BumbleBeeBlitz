@@ -1,17 +1,14 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://level/Flower.gd" type="Script" id=1]
-[ext_resource path="res://level/flower_weapon.png" type="Texture" id=2]
+[ext_resource path="res://level/stem.png" type="Texture" id=2]
 [ext_resource path="res://gui/flower_prog_back.png" type="Texture" id=3]
 [ext_resource path="res://gui/flower_prog_fore.png" type="Texture" id=4]
 [ext_resource path="res://level/flower_normal.png" type="Texture" id=5]
-[ext_resource path="res://level/flower_super.png" type="Texture" id=6]
-[ext_resource path="res://level/indicator_super.png" type="Texture" id=7]
+[ext_resource path="res://level/stem_leaf_1.png" type="Texture" id=6]
+[ext_resource path="res://level/stem_leaf_2.png" type="Texture" id=7]
 [ext_resource path="res://level/indicator_normal.png" type="Texture" id=8]
-[ext_resource path="res://level/indicator_weapon.png" type="Texture" id=9]
-[ext_resource path="res://level/flower_weapon_shadow.png" type="Texture" id=10]
-[ext_resource path="res://level/flower_stem.png" type="Texture" id=11]
-[ext_resource path="res://level/flower_super_shadow.png" type="Texture" id=12]
+[ext_resource path="res://level/stem_grass.png" type="Texture" id=9]
 [ext_resource path="res://level/flower_normal_shadow.png" type="Texture" id=13]
 
 [sub_resource type="CircleShape2D" id=4]
@@ -25,78 +22,138 @@ radius = 144.0
 
 [sub_resource type="Animation" id=3]
 resource_name = "grow"
-length = 1.5
+length = 1.8
 tracks/0/type = "value"
-tracks/0/path = NodePath("Flower/Sprite:scale")
+tracks/0/path = NodePath("Sprite:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0.6, 1.5 ),
+"times": PoolRealArray( 0.7, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.1, 0.1 ), Vector2( 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Flower/Sprite:modulate")
+tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.6, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.7, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Flower/Shadow:scale")
+tracks/2/path = NodePath("Shadow:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0.6, 1.5 ),
+"times": PoolRealArray( 0.7, 1.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.1, 0.1 ), Vector2( 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Flower/Shadow:modulate")
+tracks/3/path = NodePath("Shadow:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0.6, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.7, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Flower/Stem:value")
+tracks/4/path = NodePath("Stem:value")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.8 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 100.0 ]
+"values": [ 0.0, 0.0, 100.0 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Flower:visible")
+tracks/5/path = NodePath("Grass:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.6 ),
+"times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Leaf1:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Leaf1:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ), Vector2( 0.1, 0.1 ), Vector2( 1, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Leaf2:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.6, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Leaf2:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.6, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.1, 0.1 ), Vector2( 0.1, 0.1 ), Vector2( 1, 1 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Grass:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 1, 1 ) ]
 }
 
 [node name="Flower" type="Area2D" groups=["flowers"]]
@@ -105,83 +162,61 @@ collision_mask = 16
 script = ExtResource( 1 )
 
 [node name="Normal" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 4 )
 disabled = true
 
-[node name="Shadow" type="Sprite" parent="Normal"]
-position = Vector2( 4, 64 )
-z_index = -1
-texture = ExtResource( 13 )
-
-[node name="Stem" type="TextureProgress" parent="Normal"]
-margin_left = -8.0
-margin_right = 32.0
-margin_bottom = 64.0
-value = 100.0
-texture_progress = ExtResource( 11 )
-fill_mode = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="Normal"]
-texture = ExtResource( 5 )
-
-[node name="Indicator" type="Sprite" parent="Normal"]
-texture = ExtResource( 8 )
-
 [node name="Super" type="CollisionPolygon2D" parent="."]
+visible = false
 polygon = PoolVector2Array( 64, -56, 88, 8, 80, 48, 8, 72, -80, 56, -80, -32, -64, -56, -32, -72, 16, -72 )
 disabled = true
 
-[node name="Shadow" type="Sprite" parent="Super"]
-position = Vector2( 4, 64 )
-z_index = -1
-texture = ExtResource( 12 )
-
-[node name="Stem" type="TextureProgress" parent="Super"]
-margin_left = -8.0
-margin_right = 32.0
-margin_bottom = 64.0
-value = 100.0
-texture_progress = ExtResource( 11 )
-fill_mode = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sprite" type="Sprite" parent="Super"]
-texture = ExtResource( 6 )
-
-[node name="Indicator" type="Sprite" parent="Super"]
-texture = ExtResource( 7 )
-
 [node name="Weapon" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 6 )
 disabled = true
 
-[node name="Shadow" type="Sprite" parent="Weapon"]
-position = Vector2( 4, 64 )
+[node name="Shadow" type="Sprite" parent="."]
+position = Vector2( 8, 83 )
 z_index = -1
-texture = ExtResource( 10 )
+texture = ExtResource( 13 )
 
-[node name="Stem" type="TextureProgress" parent="Weapon"]
-margin_left = -8.0
-margin_right = 32.0
-margin_bottom = 64.0
+[node name="Stem" type="TextureProgress" parent="."]
+margin_left = -32.0
+margin_right = 38.0
+margin_bottom = 83.0
+mouse_filter = 2
 value = 100.0
-texture_progress = ExtResource( 11 )
+texture_progress = ExtResource( 2 )
 fill_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprite" type="Sprite" parent="Weapon"]
-texture = ExtResource( 2 )
-
-[node name="Indicator" type="Sprite" parent="Weapon"]
-visible = false
+[node name="Grass" type="Sprite" parent="."]
+position = Vector2( -2, 82 )
+z_index = -1
 texture = ExtResource( 9 )
+offset = Vector2( -1, -4 )
+
+[node name="Leaf1" type="Sprite" parent="."]
+position = Vector2( -4, 69 )
+z_index = -1
+texture = ExtResource( 6 )
+offset = Vector2( -12, -5 )
+
+[node name="Leaf2" type="Sprite" parent="."]
+position = Vector2( 9, 47 )
+z_index = -1
+texture = ExtResource( 7 )
+offset = Vector2( 13, -5 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 5 )
+
+[node name="Indicator" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 8 )
 
 [node name="Exclusion" type="Area2D" parent="."]
 visible = false
@@ -204,6 +239,7 @@ margin_top = -40.0
 margin_right = 45.0
 margin_bottom = -20.0
 rect_scale = Vector2( -1, 1 )
+mouse_filter = 2
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01
@@ -219,6 +255,7 @@ visible = false
 margin_top = -40.0
 margin_right = 45.0
 margin_bottom = -20.0
+mouse_filter = 2
 size_flags_horizontal = 3
 max_value = 1.0
 step = 0.01

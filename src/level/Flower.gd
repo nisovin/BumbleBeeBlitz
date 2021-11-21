@@ -2,16 +2,18 @@ extends Area2D
 
 const TICK_RATE = 0.1
 const COLLECT_TIMES = {
-	G.FlowerType.NORMAL: 1.5,
-	G.FlowerType.WEAPON: 1.0,
-	G.FlowerType.SUPER: 8.0
+	G.FlowerType.NORMAL: 1.0,
+	G.FlowerType.WEAPON: 0.75,
+	G.FlowerType.SUPER: 7.0
 }
+
+onready var indicator = $Indicator
 
 var type = G.FlowerType.NORMAL
 
 var dead = false
 var collider
-var indicator
+var lifetime = 0
 var gatherers = {}
 var winning = 0
 var progress = 0
@@ -29,15 +31,14 @@ func init(data):
 		if i == type:
 			collider = nodes[i]
 		else:
-			nodes[i].hide()
 			nodes[i].queue_free()
-	collider.name = "Flower"
-	collider.show()
-	indicator = collider.get_node("Indicator")
+	$Sprite.texture = Game.FlowerSprites[type]["sprite"]
+	$Shadow.texture = Game.FlowerSprites[type]["shadow"]
+	for sprite in [$Sprite, $Shadow, $Grass, $Leaf1, $Leaf2]:
+		sprite.modulate = Color.transparent
+		sprite.scale = Vector2(0.1, 0.1)
 	indicator.hide()
-	var sprite = collider.get_node("Sprite")
-	sprite.modulate = Color.transparent
-	sprite.scale = Vector2(0.1, 0.1)
+	indicator.texture = Game.FlowerSprites[type]["indicator"]
 	$AnimationPlayer.play("grow")
 	
 func get_data():
@@ -48,6 +49,7 @@ func get_data():
 
 func tick():
 	if dead: return
+	lifetime += 1
 	
 	# find players
 	var player_areas = get_overlapping_areas()
@@ -82,21 +84,36 @@ func tick():
 	gatherers = new_gatherers
 	
 	# update progress
+	var collect_time = COLLECT_TIMES[type]
+	var recovery = 0.5
+	var slow_mode = 0.5
+	if type == G.FlowerType.SUPER:
+		if lifetime > 10:
+			recovery *= 0.5
+			slow_mode += 0.1
+		if lifetime > 20:
+			collect_time -= 0.5
+			recovery *= 0.5
+			slow_mode += 0.2
+		if lifetime > 30:
+			collect_time -= 1
+			recovery = 0
+			slow_mode += 0.2
 	var winning_team = []
 	if team1.size() > 0 and team2.size() == 0:
 		winning_team = team1
-		progress -= TICK_RATE / COLLECT_TIMES[type] * min(3, team1.size())
+		progress -= TICK_RATE / collect_time * min(3, team1.size())
 	elif team2.size() > 0 and team1.size() == 0:
 		winning_team = team2
-		progress += TICK_RATE / COLLECT_TIMES[type] * min(3, team2.size())
+		progress += TICK_RATE / collect_time * min(3, team2.size())
 	elif team1.size() > team2.size():
 		winning_team = team1
-		progress -= TICK_RATE / COLLECT_TIMES[type] * 0.5
+		progress -= TICK_RATE / collect_time * slow_mode
 	elif team2.size() > team1.size():
 		winning_team = team2
-		progress += TICK_RATE / COLLECT_TIMES[type] * 0.5
+		progress += TICK_RATE / collect_time * slow_mode
 	else:
-		progress = move_toward(progress, 0, TICK_RATE * 0.25)
+		progress = move_toward(progress, 0, TICK_RATE * recovery)
 		
 	# collect if possible
 	if progress <= -1.0 and top_1 != null:

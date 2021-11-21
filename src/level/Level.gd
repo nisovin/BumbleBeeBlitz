@@ -1,8 +1,9 @@
 extends Node2D
 
 const NORMAL_FLOWER_COOLDOWN = 3
-const SUPER_FLOWER_MIN_DELAY = 20
-const SUPER_FLOWER_MAX_DELAY = 60
+const EVENT_DELAY_MIN = 30
+const EVENT_DELAY_MAX = 60
+const LADYBUG_SWARM_DURATION = 20
 const MATCH_DURATION = 180
 
 onready var players_node = $Players
@@ -25,7 +26,9 @@ var nectar_holder = null
 var nectar_cd = 0
 var weapon_holders = [null, null]
 var super_flower = null
-var super_time_since = -SUPER_FLOWER_MIN_DELAY
+
+var time_since_event = -EVENT_DELAY_MIN
+var ladybug_swarm = false
 
 var match_gui = null
 
@@ -329,20 +332,37 @@ func flower_tick():
 		if nectar_cd == 0:
 			spawn_flower(G.FlowerType.NORMAL)
 			return
-	if super_flower == null:
-		super_time_since += 1
-		if super_time_since > 0:
-			var r = randf() * SUPER_FLOWER_MAX_DELAY
-			if r < super_time_since:
-				spawn_flower(G.FlowerType.SUPER)
+	if time_since_event > -1000 and super_flower == null and not ladybug_swarm:
+		time_since_event += 1
+		if time_since_event > 0:
+			var r = randf() * EVENT_DELAY_MAX
+			if r < time_since_event:
+				start_event()
 				return
 	for i in weapon_holders.size():
 		if weapon_holders[i] == null:
 			spawn_flower(G.FlowerType.WEAPON, i)
 			return
-			
-	if randf() < 0.01:
+	
+	var ladybug_chance = 0.4 if ladybug_swarm else 0.01
+	if randf() < ladybug_chance:
 		spawn_ladybug()
+
+func start_event():
+	if randf() < 0.7:
+		spawn_flower(G.FlowerType.SUPER)
+	else:
+		start_ladybug_swarm()
+	time_since_event = -1000
+		
+func start_ladybug_swarm():
+	ladybug_swarm = true
+	Game.server_message("ladybugswarm", [])
+	get_tree().create_timer(LADYBUG_SWARM_DURATION, false).connect("timeout", self, "stop_ladybug_swarm")
+	
+func stop_ladybug_swarm():
+	ladybug_swarm = false
+	time_since_event = -EVENT_DELAY_MIN
 
 func spawn_flower(type, index = 0):
 	flower_counter += 1
@@ -398,7 +418,7 @@ func flower_collected(flower, player):
 		G.FlowerType.SUPER:
 			super_flower = null
 			scored(player.team, player.id, G.FlowerType.SUPER)
-			super_time_since = -SUPER_FLOWER_MIN_DELAY
+			time_since_event = -EVENT_DELAY_MIN
 			
 func spawn_ladybug():
 	object_counter += 1
@@ -458,7 +478,7 @@ func scored(team, who, type = G.FlowerType.NORMAL):
 	score[team] += amt
 	if type == G.FlowerType.NORMAL:
 		nectar_holder = null
-	N.rpc_or_local(self, "update_score", [score[1], score[2]])
+	N.rpc_or_local(self, "update_score", [score[1], score[2], team, type])
 	var p = players_node.get_node_or_null(str(who))
 	if p != null:
 		Game.server_message(msg, {
@@ -468,7 +488,7 @@ func scored(team, who, type = G.FlowerType.NORMAL):
 			"POINTS": str(amt)
 		})
 	
-remotesync func update_score(team1, team2):
+remotesync func update_score(team1, team2, team = 0, type = 0):
 	if not Game.is_server: # TODO: change sound based on type of score
 		Game.play_sound("score")
 	score[1] = team1

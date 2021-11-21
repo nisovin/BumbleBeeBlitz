@@ -48,42 +48,43 @@ points = PoolVector2Array( -896, 384, -896, -384, 0, -768, 896, -384, 896, 384, 
 default_color = Color( 0.262745, 0.25098, 0.215686, 1 )
 
 [node name="Boundary" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 6
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundary"]
-polygon = PoolVector2Array( -1024, -480, 0, -912, 1024, -464, 1024, 464, 0, 928, -1024, 464 )
+polygon = PoolVector2Array( -1024, -480, 0, -912, 1024, -464, 1024, 464, 0, 912, -1024, 464 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2( -480, -640 )
-rotation = -0.402692
+rotation = -0.401426
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 544, -608 )
-rotation = 0.408536
+rotation = 0.401426
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 624, 576 )
-rotation = -0.411073
+rotation = -0.401426
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
 position = Vector2( -544, 608 )
-rotation = 0.410694
+rotation = 0.401426
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="Walls"]
 position = Vector2( -960, 0 )
-rotation = -1.57848
+rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 960, -2.38419e-07 )
-rotation = -1.56793
+rotation = -1.5708
 shape = SubResource( 1 )
 
 [node name="Hive1" parent="." instance=ExtResource( 2 )]
@@ -149,6 +150,12 @@ position = Vector2( -64, 512 )
 [node name="L8" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
 position = Vector2( -64, -512 )
 
+[node name="L9" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
+position = Vector2( -256, -384 )
+
+[node name="L10" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
+position = Vector2( -256, 384 )
+
 [node name="R1" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
 position = Vector2( 128, -256 )
 
@@ -172,6 +179,12 @@ position = Vector2( 64, 512 )
 
 [node name="R8" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
 position = Vector2( 64, -512 )
+
+[node name="R9" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
+position = Vector2( 256, -384 )
+
+[node name="R10" type="Position2D" parent="FlowerSpawns" groups=["fssuper", "fsweapon"]]
+position = Vector2( 256, 384 )
 
 [node name="StartSpawns" type="Node2D" parent="."]
 

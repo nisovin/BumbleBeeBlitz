@@ -12,6 +12,24 @@ const NectarScript = preload("res://level/Nectar.gd")
 const Bullet = preload("res://player/Bullet.tscn")
 const Ladybug = preload("res://level/Ladybug.tscn")
 
+const FlowerSprites = {
+	G.FlowerType.NORMAL: {
+		"sprite": preload("res://level/flower_normal.png"),
+		"shadow": preload("res://level/flower_normal_shadow.png"),
+		"indicator": preload("res://level/indicator_normal.png")
+	},
+	G.FlowerType.WEAPON: {
+		"sprite": preload("res://level/flower_weapon.png"),
+		"shadow": preload("res://level/flower_weapon_shadow.png"),
+		"indicator": preload("res://level/indicator_weapon.png")
+	},
+	G.FlowerType.SUPER: {
+		"sprite": preload("res://level/flower_super.png"),
+		"shadow": preload("res://level/flower_super_shadow.png"),
+		"indicator": preload("res://level/indicator_super.png")
+	}
+}
+
 const SETTINGS_FILE = "user://bumble_settings.dat"
 
 signal player_connected

@@ -302,7 +302,7 @@ anims/reset = SubResource( 4 )
 anims/stunned = SubResource( 3 )
 
 [node name="Shadow" type="Sprite" parent="Visuals"]
-position = Vector2( 5, 78 )
+position = Vector2( 4, 92 )
 z_index = -1
 texture = ExtResource( 12 )
 
