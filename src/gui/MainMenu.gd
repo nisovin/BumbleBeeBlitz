@@ -8,6 +8,8 @@ onready var join_button = $VBoxContainer/HBoxContainer/Buttons/JoinButton
 var server_ip = ""
 var server_port = 0
 
+var last_player_count = -1
+
 func _ready():
 	if Game.settings.name == "":
 		name_input.text = N.rand_array(G.NAMES)
@@ -64,8 +66,12 @@ func server_update(result, response_code, headers, body: PoolByteArray):
 				set_server("Not Available")
 			else:
 				for server in data.servers:
-					if int(server.players) < G.MAX_PLAYERS:
+					var player_count = int(server.players)
+					if player_count < G.MAX_PLAYERS:
 						set_server(str(server.players) + " players, " + server.status, server.ip, server.port)
+						if player_count > 0 and last_player_count == 0:
+							Game.play_sound("super_spawn")
+						last_player_count = player_count
 						return
 				set_server("Full")
 				

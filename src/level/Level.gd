@@ -407,6 +407,7 @@ func flower_collected(flower, player):
 	match flower.type:
 		G.FlowerType.NORMAL:
 			nectar_holder = player
+			N.rpc_or_local(self, "nectar_collected", [flower.global_position])
 		G.FlowerType.WEAPON:
 			var ok = false
 			for i in weapon_holders.size():
@@ -419,7 +420,10 @@ func flower_collected(flower, player):
 			super_flower = null
 			scored(player.team, player.id, G.FlowerType.SUPER)
 			time_since_event = -EVENT_DELAY_MIN
-			
+
+remotesync func nectar_collected(pos):
+	Game.play_sound_at_pos("pickup", pos)
+
 func spawn_ladybug():
 	object_counter += 1
 	var data = {}
@@ -489,8 +493,13 @@ func scored(team, who, type = G.FlowerType.NORMAL):
 		})
 	
 remotesync func update_score(team1, team2, team = 0, type = 0):
-	if not Game.is_server: # TODO: change sound based on type of score
-		Game.play_sound("score")
+	if not Game.is_server:
+		if type == G.FlowerType.SUPER:
+			Game.play_sound("score_super")
+		elif type == G.ObjectType.LADYBUG:
+			Game.play_sound("score_ladybug")
+		else:
+			Game.play_sound("score")
 	score[1] = team1
 	score[2] = team2
 	if match_gui != null:

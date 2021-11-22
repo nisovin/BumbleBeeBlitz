@@ -47,6 +47,7 @@ var player = null
 var online = false
 var is_server = false
 var match_started = false
+var pause_menu_open = false
 var player_id = -1
 var player_name = "Bumble"
 var player_map = {}
@@ -57,7 +58,6 @@ var audio_players = []
 
 var settings = {
 	"name": "",
-	"vol_master": 1.0,
 	"vol_music": 1.0,
 	"vol_ambient": 1.0,
 	"vol_sfx": 1.0
@@ -68,6 +68,7 @@ func _ready():
 	for i in 15:
 		var a = AudioStreamPlayer.new()
 		a.bus = "SFX"
+		a.pause_mode = Node.PAUSE_MODE_PROCESS
 		add_child(a)
 		audio_players.append(a)
 	name_regex.compile("[^A-Za-z0-9_]")
@@ -88,7 +89,6 @@ func load_settings():
 			settings[key] = s[key]
 		file.close()
 		player_name = settings.name
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear2db(settings.vol_master))
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(settings.vol_music))
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Ambient"), linear2db(settings.vol_ambient))
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear2db(settings.vol_sfx))

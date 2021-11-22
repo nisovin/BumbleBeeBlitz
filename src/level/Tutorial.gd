@@ -115,6 +115,7 @@ func _on_score():
 	show_hint("SCORE! You've earned your team\n10 points!")
 	score[1] = 10
 	match_gui.update_scores()
+	Game.play_sound("score")
 	get_tree().create_timer(4, false).connect("timeout", self, "_on_timer1")
 	
 func _on_timer1():

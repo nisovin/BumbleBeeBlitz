@@ -102,11 +102,13 @@ team = 2
 [node name="Players" type="Node2D" parent="."]
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 4 )
 volume_db = -5.0
 bus = "Music"
 
 [node name="Ambiance" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
 stream = ExtResource( 5 )
 bus = "Ambient"
 

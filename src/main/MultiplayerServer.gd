@@ -104,10 +104,10 @@ func update_status():
 		var minutes = time / 60
 		var seconds = time % 60
 		status += str(minutes) + ":" + ("0" if seconds < 10 else "") + str(seconds)
-	var players = get_tree().multiplayer.get_network_connected_peers().size()
-	var url = "https://nisovin.com/gamejams/update_server.php?key=" + api_key + "&id=" + str(server_id) + "&players=" + str(players) + "&status=" + status.replace(" ", "+")
+	var player_count = get_tree().multiplayer.get_network_connected_peers().size()
+	var url = "https://nisovin.com/gamejams/update_server.php?key=" + api_key + "&id=" + str(server_id) + "&players=" + str(player_count) + "&status=" + status.replace(" ", "+")
 	http.request(url)
-	print("Status update: players: " + str(players) + " status: " + status)
+	print("Status update: players: " + str(player_count) + " status: " + status)
 	get_tree().create_timer(2).connect("timeout", self, "update_status")
 
 func req_done(result: int, response_code: int, headers: PoolStringArray, body: PoolByteArray):

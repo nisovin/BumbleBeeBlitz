@@ -23,15 +23,15 @@ const SOUNDS = {
 	"start": preload("res://sounds/UI_Quirky27.wav"),
 	"flower_spawn": preload("res://sounds/UI_Quirky_49.wav"),
 	"super_spawn": preload("res://sounds/Bells6.wav"),
-	#"nectar_collect": "", TODO
-	#"weapon_collect": "",
 	"boost": preload("res://sounds/swish-9-long.wav"),
 	"pass": preload("res://sounds/swish-13.wav"),
 	"drop": preload("res://sounds/thwack-02.wav"),
 	"pickup": preload("res://sounds/UI_Quirky16.wav"),
 	"shoot": preload("res://sounds/swish-3-slime_01.wav"),
 	"hit": preload("res://sounds/thwack-07.wav"),
-	"score": preload("res://sounds/SynthChime10.wav")
+	"score": preload("res://sounds/SynthChime10.wav"),
+	"score_super": preload("res://sounds/SynthChime9.wav"),
+	"score_ladybug": preload("res://sounds/UI-Quirky_36.wav"),
 }
 
 const NAMES = [

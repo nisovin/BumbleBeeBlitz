@@ -47,6 +47,7 @@ onready var bee_visual = $Visuals/Bee
 onready var shadow = $Visuals/Shadow
 onready var sprite = $Visuals/Bee/Holder/Sprite1
 onready var sprite_holder = $Visuals/Bee/Holder
+onready var face = $Visuals/Bee/Holder/Face
 onready var bucket_visual = $Visuals/Bucket
 onready var bucket_sprite = $Visuals/Bucket/Empty
 onready var bucket_filled = $Visuals/Bucket/Nectar
@@ -215,8 +216,14 @@ func update_visuals():
 	else:
 		bucket_visual.hide()
 	indicator_bucket.visible = carrying == G.FlowerType.NORMAL
-	if boost_duration > 0:
-		pass
+	if shoot_start_time > 0:
+		face.frame = 1
+	elif stun_duration > 0 or disorient_duration > 0:
+		face.frame = 2
+	elif boost_duration > 0:
+		face.frame = 3
+	else:
+		face.frame = 0
 
 func is_carrying():
 	return carrying >= 0
@@ -254,6 +261,7 @@ func _physics_process(delta):
 		stun_duration -= delta
 		if stun_duration <= 0 and disorient_duration <= 0:
 			stun_anim.play("reset")
+			update_visuals()
 		velocity = velocity.move_toward(Vector2.ZERO, ACCEL_STUNNED * delta)
 	else:
 		if disorient_duration > 0:
@@ -261,8 +269,11 @@ func _physics_process(delta):
 			accel = ACCEL_DISORIENTED
 			if disorient_duration <= 0:
 				stun_anim.play("reset")
+				update_visuals()
 		if boost_duration > 0:
 			boost_duration -= delta
+			if boost_duration <= 0:
+				update_visuals()
 		elif movement == Vector2.ZERO or shoot_start_time > 0:
 			velocity = velocity.move_toward(Vector2.ZERO, accel * DECEL_FACTOR * delta)
 		else:
@@ -366,7 +377,6 @@ remotesync func update_collision(new_vel, stun, disorient, bullet = false):
 func get_shoot_arrow_data():
 	var length = 0
 	var state = 0
-	var width = 1.0
 	if shoot_start_time > 0:
 		var time = (OS.get_ticks_msec() - shoot_start_time) / 1000.0
 		if carrying == G.FlowerType.NORMAL:
@@ -413,6 +423,7 @@ remotesync func shoot_start(dir):
 	movement = Vector2.ZERO
 	aim_dir = dir
 	update_facing()
+	update_visuals()
 	stun_anim.play("chargeup")
 	
 remotesync func shoot_aim(dir):
@@ -422,6 +433,7 @@ remotesync func shoot_aim(dir):
 remotesync func shoot_cancel():
 	shoot_start_time = 0
 	update_facing()
+	update_visuals()
 	if stun_anim.current_animation == "chargeup":
 		stun_anim.play("reset")
 
@@ -443,6 +455,7 @@ remotesync func shoot(dir):
 	shoot_start_time = 0
 	if stun_anim.current_animation == "chargeup":
 		stun_anim.play("reset")
+		update_visuals()
 
 func calc_shoot_power(time, min_time, max_time, min_power, max_power):
 	if time < min_time: return 0

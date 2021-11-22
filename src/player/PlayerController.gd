@@ -26,6 +26,7 @@ func disable():
 	set_process_input(false)
 
 func _process(delta):
+	if Game.pause_menu_open: return
 	var v = Vector2.ZERO
 	if using_controller:
 		v = get_controller_dir()
@@ -38,11 +39,6 @@ func _process(delta):
 		v = Input.get_vector("left", "right", "up", "down")
 		if v != Vector2.ZERO:
 			v = v.normalized()
-#		elif target != null:
-#			if player.position.distance_squared_to(target) > 50*50:
-#				v = player.position.direction_to(target)
-#			else:
-#				target = null
 	
 	var a = -1
 	if v != Vector2.ZERO:
@@ -91,6 +87,8 @@ func get_aim_dir():
 		return player.position.direction_to(get_global_mouse_position())
 
 func _unhandled_input(event):
+	if Game.pause_menu_open: return
+	
 	if not using_controller:
 		if event is InputEventJoypadButton or (event is InputEventJoypadMotion and event.axis_value > 0.5):
 			using_controller = true

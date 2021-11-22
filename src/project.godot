@@ -32,7 +32,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="BumbleBeeBattle"
+config/name="Bumblebee Blitz"
 run/main_scene="res://main/Main.tscn"
 config/icon="res://icon.png"
 

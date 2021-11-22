@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/PlayerController.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://player/indicator2.png" type="Texture" id=10]
 [ext_resource path="res://player/indicator_bucket.png" type="Texture" id=11]
 [ext_resource path="res://player/shadow.png" type="Texture" id=12]
+[ext_resource path="res://player/bee_faces.png" type="Texture" id=13]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -287,13 +288,19 @@ anims/swing2 = SubResource( 8 )
 [node name="Sprite1" type="AnimatedSprite" parent="Visuals/Bee/Holder"]
 position = Vector2( -7, -4 )
 frames = SubResource( 13 )
+frame = 3
 playing = true
 
 [node name="Sprite2" type="AnimatedSprite" parent="Visuals/Bee/Holder"]
 position = Vector2( -7, -4 )
 frames = SubResource( 19 )
-frame = 3
+frame = 2
 playing = true
+
+[node name="Face" type="Sprite" parent="Visuals/Bee/Holder"]
+position = Vector2( 11, 8 )
+texture = ExtResource( 13 )
+hframes = 4
 
 [node name="StunAnim" type="AnimationPlayer" parent="Visuals/Bee"]
 root_node = NodePath("../..")

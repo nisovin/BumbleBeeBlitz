@@ -15,6 +15,7 @@ onready var chat_container = $Control/Chat/ScrollContainer/VBoxContainer
 onready var chat_tween = $ChatTween
 onready var ability_label = $Control/AbilityLabel
 onready var ability_cd = $Control/AbilityLabel/Boost
+onready var pause_menu = $Control/PauseMenu
 
 var chatting = false
 var chat_disabled = false
@@ -22,6 +23,7 @@ var chat_disabled = false
 func _ready():
 	Game.connect("chat_received", self, "add_chat_message")
 	close_chat()
+	pause_menu.hide()
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and not chatting and not chat_disabled:
@@ -137,3 +139,48 @@ func send_message(new_text):
 		chat_input.text = ""
 	else:
 		close_chat()
+
+func _unhandled_key_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		if pause_menu.visible:
+			close_pause_menu()
+		else:
+			open_pause_menu()
+
+func open_pause_menu():
+	if not Game.online:
+		get_tree().paused = true
+	find_node("MusicVolume").value = Game.settings.vol_music
+	find_node("AmbianceVolume").value = Game.settings.vol_ambient
+	find_node("SFXVolume").value = Game.settings.vol_sfx
+	pause_menu.show()
+	
+func close_pause_menu():
+	if not Game.online:
+		get_tree().paused = false
+	pause_menu.hide()
+
+func _on_ResumeButton_pressed():
+	close_pause_menu()
+	Game.save_settings()
+
+func _on_LeaveGameButton_pressed():
+	close_pause_menu()
+	Game.save_settings()
+	Game.start_menu()
+
+func _on_MusicVolume_value_changed(value):
+	Game.settings.vol_music = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(Game.settings.vol_music))
+
+func _on_AmbianceVolume_value_changed(value):
+	Game.settings.vol_ambient = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Ambient"), linear2db(Game.settings.vol_ambient))
+
+func _on_SFXVolume_value_changed(value):
+	Game.settings.vol_sfx = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear2db(Game.settings.vol_sfx))
+	find_node("SFXTimer").start()
+
+func _on_SFXTimer_timeout():
+	Game.play_sound("shoot")

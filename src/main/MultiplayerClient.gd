@@ -27,6 +27,7 @@ func start(ip, port):
 	print("starting client")
 
 func disconnect_client():
+	client.disconnect_from_host()
 	get_tree().network_peer = null
 
 func _on_connected():

@@ -34,6 +34,7 @@ func init(data):
 			nodes[i].queue_free()
 	$Sprite.texture = Game.FlowerSprites[type]["sprite"]
 	$Shadow.texture = Game.FlowerSprites[type]["shadow"]
+	$Stem.value = 0
 	for sprite in [$Sprite, $Shadow, $Grass, $Leaf1, $Leaf2]:
 		sprite.modulate = Color.transparent
 		sprite.scale = Vector2(0.1, 0.1)
@@ -99,18 +100,13 @@ func tick():
 			collect_time -= 1
 			recovery = 0
 			slow_mode += 0.2
-	var winning_team = []
 	if team1.size() > 0 and team2.size() == 0:
-		winning_team = team1
 		progress -= TICK_RATE / collect_time * min(3, team1.size())
 	elif team2.size() > 0 and team1.size() == 0:
-		winning_team = team2
 		progress += TICK_RATE / collect_time * min(3, team2.size())
 	elif team1.size() > team2.size():
-		winning_team = team1
 		progress -= TICK_RATE / collect_time * slow_mode
 	elif team2.size() > team1.size():
-		winning_team = team2
 		progress += TICK_RATE / collect_time * slow_mode
 	else:
 		progress = move_toward(progress, 0, TICK_RATE * recovery)
