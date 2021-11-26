@@ -112,6 +112,7 @@ func load_game_state(state):
 	if Game.match_started:
 		match_gui.update_scores()
 		match_gui.update_clock()
+		match_gui.show_scores()
 
 func start_countdown():
 	print("START COUNTDOWN")

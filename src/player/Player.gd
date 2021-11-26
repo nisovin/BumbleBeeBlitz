@@ -39,7 +39,8 @@ const HIT_VEL = 350.0
 #const NECTAR_PER_TICK = 1
 
 const SYNC_INTERVAL = 4
-const SMOOTHING_SPEED = 25
+const SMOOTHING_SPEED = 50
+const RUBBER_BAND_DIST_SQ = 100 * 100
 
 onready var flower_detector = $FlowerDetector
 onready var visual = $Visuals
@@ -80,6 +81,7 @@ var sync_offset = randi() % SYNC_INTERVAL
 
 func _ready():
 	indicator.set_as_toplevel(true)
+	$RealPos.set_as_toplevel(true)
 
 func init(data):
 	id = data.id
@@ -293,7 +295,16 @@ func _physics_process(delta):
 			if Engine.get_physics_frames() % SYNC_INTERVAL == sync_offset:
 				N.rpc_or_local(self, "update_position", [position])
 		else:
+			#$RealPos.global_position = actual_position
 			position = position.move_toward(actual_position, SMOOTHING_SPEED * delta)
+	elif not Game.is_host():
+		#$RealPos.global_position = actual_position
+		position = position.move_toward(actual_position, SMOOTHING_SPEED * delta)
+		
+	#update()
+			
+#func _draw():
+	#draw_line(Vector2.ZERO, velocity, Color.red, 3)
 
 func player_collision(other, normal):
 	var vl1 = velocity.length()
@@ -357,7 +368,7 @@ remotesync func update_movement(move):
 puppet func update_position(pos):
 	if get_tree().get_rpc_sender_id() <= 1:
 		actual_position = pos
-		if position.distance_squared_to(actual_position) > SMOOTHING_SPEED * SMOOTHING_SPEED:
+		if position.distance_squared_to(actual_position) > RUBBER_BAND_DIST_SQ:
 			position = actual_position
 
 remotesync func update_collision(new_vel, stun, disorient, bullet = false):

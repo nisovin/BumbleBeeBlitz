@@ -9,7 +9,7 @@ func init(data):
 	set_point_position(0, data.start)
 	set_point_position(1, data.start)
 	$Ladybug.position = data.start
-	$Ladybug/Sprite.rotation = (data.end - data.start).angle()
+	$Ladybug/Sprite.rotation += (data.end - data.start).angle()
 	$Ladybug/Shadow.rotation = $Ladybug/Sprite.rotation
 	var time = (data.end - data.start).length() / SPEED
 	$Tween.interpolate_method(self, "update_point", data.start, data.end, 1.5)

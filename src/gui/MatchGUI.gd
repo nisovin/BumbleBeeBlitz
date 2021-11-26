@@ -153,6 +153,7 @@ func open_pause_menu():
 	find_node("MusicVolume").value = Game.settings.vol_music
 	find_node("AmbianceVolume").value = Game.settings.vol_ambient
 	find_node("SFXVolume").value = Game.settings.vol_sfx
+	find_node("FullscreenCheck").pressed = OS.window_fullscreen
 	pause_menu.show()
 	
 func close_pause_menu():
@@ -184,3 +185,6 @@ func _on_SFXVolume_value_changed(value):
 
 func _on_SFXTimer_timeout():
 	Game.play_sound("shoot")
+
+func _on_FullscreenCheck_toggled(button_pressed):
+	OS.window_fullscreen = button_pressed

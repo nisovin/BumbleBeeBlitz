@@ -16,6 +16,8 @@ func _ready():
 	else:
 		name_input.text = Game.settings.name
 	check_server_list()
+	if OS.has_feature("web"):
+		find_node("QuitButton").hide()
 
 func _on_Name_text_changed(new_text):
 	var n = Game.name_regex.sub(new_text, "", true)
@@ -51,6 +53,18 @@ func _on_TutorialButton_pressed():
 	Game.start_tutorial()
 	queue_free()
 
+func _on_FullscreenButton_pressed():
+	OS.window_fullscreen = not OS.window_fullscreen
+	
+func _on_CreditsButton_pressed():
+	$Credits.show()
+
+func _on_CreditsCloseButton_pressed():
+	$Credits.hide()
+
+func _on_RichTextLabel_meta_clicked(meta):
+	OS.shell_open(meta)
+
 func _on_QuitButton_pressed():
 	get_tree().quit()
 	
@@ -83,9 +97,5 @@ func set_server(status, ip = "", port = 0):
 	server_port = port
 	status_label.text = status
 	join_button.disabled = ip == ""
-
-
-
-
 
 

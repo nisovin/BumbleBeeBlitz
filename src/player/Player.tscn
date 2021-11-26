@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/PlayerController.gd" type="Script" id=2]
@@ -173,24 +173,6 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=24]
-emission_shape = 1
-emission_sphere_radius = 6.0
-flag_disable_z = true
-direction = Vector3( 0, -1, 0 )
-spread = 20.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 20.0
-angular_velocity = 50.0
-angular_velocity_random = 1.0
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-radial_accel = 4.0
-angle = 20.0
-angle_random = 1.0
-scale = 2.5
-scale_random = 1.0
-
 [sub_resource type="Animation" id=6]
 resource_name = "nectar"
 loop = true
@@ -327,11 +309,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GatheringParticles" type="Particles2D" parent="."]
+[node name="GatheringParticles" type="CPUParticles2D" parent="."]
 position = Vector2( 0, 24 )
 amount = 15
 local_coords = false
-process_material = SubResource( 24 )
+emission_shape = 1
+emission_sphere_radius = 6.0
+direction = Vector2( 0, -1 )
+spread = 20.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 20.0
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+radial_accel = 4.0
+angle = 20.0
+angle_random = 1.0
+scale_amount = 2.5
+scale_amount_random = 1.0
 
 [node name="BounceAnim" type="AnimationPlayer" parent="."]
 anims/nectar = SubResource( 6 )
@@ -349,6 +343,11 @@ texture = ExtResource( 10 )
 visible = false
 position = Vector2( 0, 4 )
 texture = ExtResource( 11 )
+
+[node name="RealPos" type="Polygon2D" parent="."]
+visible = false
+color = Color( 1, 1, 1, 0.643137 )
+polygon = PoolVector2Array( 0, -9, -10, 0, 0, 7, 9, 0 )
 
 [connection signal="timeout" from="CPUController/AITimer" to="CPUController" method="ai_tick"]
 [connection signal="timeout" from="CPUController/ShootTimer" to="CPUController" method="shoot_fire"]
