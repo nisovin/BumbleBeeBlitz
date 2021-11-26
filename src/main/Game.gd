@@ -194,7 +194,7 @@ puppet func broadcast_message(who, team, msg):
 			elif team == 2: color = G.TEAM2_CHAT_COLOR
 			msg = "[color=gray]<[/color][color=" + color + "]" + who + "[/color][color=gray]>[/color] " + msg
 		else:
-			msg = "[color=lime]* " + msg + "[/color]"
+			msg = "[color=aqua]*[/color] " + msg
 		emit_signal("chat_received", msg)
 
 func play_sound(sound, bus = "SFX", volume = 1.0):

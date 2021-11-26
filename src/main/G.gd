@@ -158,5 +158,13 @@ const MESSAGES = {
 	],
 	"ladybugswarm": [
 		"A [color=#E75480]LADY BUG SWARM[/color] is passing through! Catch ladybugs to earn points."
+	],
+	"gameover": [
+		"The match is over! Team [color={TEAMCOLOR}]{TEAMNAME}[/color] wins!",
+		"Congrats to team [color={TEAMCOLOR}]{TEAMNAME}[/color] for winning the game!",
+		"The game has ended! The winners are team [color={TEAMCOLOR}]{TEAMNAME}[/color]!"
+	],
+	"gameovertie": [
+		"The match has ended in a tie!"
 	]
 }

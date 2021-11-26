@@ -156,6 +156,17 @@ puppet func game_started():
 
 func end_game():
 	Game.match_started = false
+	var data = {}
+	var msg = "gameover"
+	if score[1] > score[2]:
+		data.TEAMNAME = team1_name
+		data.TEAMCOLOR = G.TEAM1_CHAT_COLOR
+	elif score[2] > score[1]:
+		data.TEAMNAME = team2_name
+		data.TEAMCOLOR = G.TEAM2_CHAT_COLOR
+	else:
+		msg = "gameovertie"
+	Game.server_message(msg, data)
 	Game.server_message_custom("The game is over!")
 	$FlowerTick.stop()
 	for flower in flowers_node.get_children():
@@ -169,9 +180,9 @@ func end_game():
 	super_flower = null
 	weapon_holders = [null, null]
 	if Game.is_server:
-		get_tree().create_timer(5).connect("timeout", Game, "start_server_again")
+		get_tree().create_timer(8).connect("timeout", Game, "start_server_again")
 	else:
-		get_tree().create_timer(5).connect("timeout", Game, "start_menu")
+		get_tree().create_timer(8).connect("timeout", Game, "start_menu")
 
 puppet func game_ended():
 	Game.match_started = false
@@ -239,6 +250,14 @@ remotesync func add_player(data):
 	var player = Game.Player.instance()
 	players_node.add_child(player)
 	player.init(data)
+	if match_gui != null and not data.cpu:
+		var msg = "[color="
+		if data.team == 1:
+			msg += G.TEAM1_CHAT_COLOR
+		else:
+			msg += G.TEAM2_CHAT_COLOR
+		msg += "]" + data.name + "[/color] [color=lime] has joined the game![/color]"
+		match_gui.add_chat_message(msg)
 
 func remove_player(id):
 	var p = players_node.get_node_or_null(str(id))
@@ -258,6 +277,15 @@ puppet func delete_player(id):
 	var p = players_node.get_node_or_null(str(id))
 	if p != null:
 		p.remove()
+		if match_gui != null and not p.cpu:
+			var msg = "[color="
+			if p.team == 1:
+				msg += G.TEAM1_CHAT_COLOR
+			else:
+				msg += G.TEAM2_CHAT_COLOR
+			msg += "]" + p.nameplate + "[/color] [color=red] has left the game![/color]"
+			match_gui.add_chat_message(msg)
+			
 		
 func balance_teams():
 	var team1_players = 0
